@@ -74,6 +74,21 @@ def sacarv(id, valor):
         db.session.commit()
         return render_template("lista.html", productos = producto.query.all())
 
+@app.route("/resetv/<int:id>")
+def resetv(id):
+    p = producto.query.filter_by(id=id).first()
+    p.producto_valor = p.producto_valor - p.producto_valor
+    db.session.commit()
+    return render_template("lista.html", productos = producto.query.all())
+
+@app.route("/resetc/<int:id>")
+def resetc(id):
+    p = producto.query.filter_by(id=id).first()
+    p.producto_cantidad = p.producto_cantidad - p.producto_cantidad
+    db.session.commit()
+    return render_template("lista.html", productos = producto.query.all())
+
+
 @app.route("/eliminar/<int:id>")
 def eliminar(id):
     p = producto.query.filter_by(id=id).first()
