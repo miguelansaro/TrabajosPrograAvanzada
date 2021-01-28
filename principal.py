@@ -88,8 +88,13 @@ def resetc(id):
     db.session.commit()
     return render_template("lista.html", productos = producto.query.all())
 
-
+@app.route("/vaciar")
+def vaciar():
+    p = producto.query.filter().delete()
+    db.session.commit()
+    return render_template("lista.html", productos = producto.query.all())
 @app.route("/eliminar/<int:id>")
+
 def eliminar(id):
     p = producto.query.filter_by(id=id).first()
     db.session.delete(p)
