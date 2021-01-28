@@ -38,7 +38,7 @@ def agregar(nombre, valor, cantidad):
 def agregarc(id, cantidad):
     p = producto.query.filter_by(id=id).first()
     if cantidad < 0 :
-        return render_template("lista.html", productos = producto.query.all())
+        return render_template("lista.html", msg = No es posible realizar el cambio, productos = producto.query.all())
     else:
         p.producto_cantidad = p.producto_cantidad + cantidad
         db.session.commit()
@@ -48,7 +48,7 @@ def agregarc(id, cantidad):
 def agregarv(id, valor):
     p = producto.query.filter_by(id=id).first()
     if valor < 0 :
-        return render_template("lista.html", productos = producto.query.all())
+        return render_template("lista.html", msg = No es posible realizar el cambio, productos = producto.query.all())
     else:
         p.producto_valor = p.producto_valor + valor
         db.session.commit()
@@ -58,7 +58,7 @@ def agregarv(id, valor):
 def sacarc(id, cantidad):
     p = producto.query.filter_by(id=id).first()
     if p.producto_cantidad < cantidad:
-        return render_template("lista.html", productos = producto.query.all())
+        return render_template("lista.html", msg = No es posible realizar el cambio, productos = producto.query.all())
     else:
         p.producto_cantidad = p.producto_cantidad - cantidad
         db.session.commit()
@@ -68,7 +68,7 @@ def sacarc(id, cantidad):
 def sacarv(id, valor):
     p = producto.query.filter_by(id=id).first()
     if p.producto_valor < valor:
-        return render_template("lista.html", productos = producto.query.all())
+        return render_template("lista.html", msg = No es posible realizar el cambio, productos = producto.query.all())
     else:
         p.producto_valor = p.producto_valor - valor
         db.session.commit()
