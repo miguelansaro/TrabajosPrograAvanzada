@@ -18,6 +18,7 @@ class producto(db.Model):
         self.producto_valor = datos["valor"]
         self.producto_cantidad = datos["cantidad"]
 
+
 @app.route("/")
 def principal():
     return render_template("lista.html", productos = producto.query.all())
@@ -32,74 +33,74 @@ def agregar(nombre, valor, cantidad):
     p = producto(datos)
     db.session.add(p)
     db.session.commit()
-    return render_template("lista.html", productos = producto.query.all())
-
+    return principal()
+    
 @app.route("/agregarc/<int:id>/<int:cantidad>")
 def agregarc(id, cantidad):
     p = producto.query.filter_by(id=id).first()
     if cantidad < 0 :
-        return render_template("lista.html", msg = "No es posible realizar el cambio", productos = producto.query.all())
+        return principal()
     else:
         p.producto_cantidad = p.producto_cantidad + cantidad
         db.session.commit()
-        return render_template("lista.html", productos = producto.query.all())
+        return principal()
 
 @app.route("/agregarv/<int:id>/<int:valor>")
 def agregarv(id, valor):
     p = producto.query.filter_by(id=id).first()
     if valor < 0 :
-        return render_template("lista.html", msg = "No es posible realizar el cambio", productos = producto.query.all())
+        return principal()
     else:
         p.producto_valor = p.producto_valor + valor
         db.session.commit()
-        return render_template("lista.html", productos = producto.query.all())
+        return principal()
 
 @app.route("/sacarc/<int:id>/<int:cantidad>")
 def sacarc(id, cantidad):
     p = producto.query.filter_by(id=id).first()
     if p.producto_cantidad < cantidad:
-        return render_template("lista.html", msg = "No es posible realizar el cambio", productos = producto.query.all())
+        return principal()
     else:
         p.producto_cantidad = p.producto_cantidad - cantidad
         db.session.commit()
-        return render_template("lista.html", productos = producto.query.all())
+        return principal()
 
 @app.route("/sacarv/<int:id>/<int:valor>")
 def sacarv(id, valor):
     p = producto.query.filter_by(id=id).first()
     if p.producto_valor < valor:
-        return render_template("lista.html", msg = "No es posible realizar el cambio", productos = producto.query.all())
+        return principal()
     else:
         p.producto_valor = p.producto_valor - valor
         db.session.commit()
-        return render_template("lista.html", productos = producto.query.all())
+        return principal()
 
 @app.route("/resetv/<int:id>")
 def resetv(id):
     p = producto.query.filter_by(id=id).first()
     p.producto_valor = p.producto_valor - p.producto_valor
     db.session.commit()
-    return render_template("lista.html", productos = producto.query.all())
+    return principal()
 
 @app.route("/resetc/<int:id>")
 def resetc(id):
     p = producto.query.filter_by(id=id).first()
     p.producto_cantidad = p.producto_cantidad - p.producto_cantidad
     db.session.commit()
-    return render_template("lista.html", productos = producto.query.all())
+    return principal()
 
 @app.route("/vaciar")
 def vaciar():
     p = producto.query.filter().delete()
     db.session.commit()
-    return render_template("lista.html", productos = producto.query.all())
-@app.route("/eliminar/<int:id>")
+    return principal()
 
+@app.route("/eliminar/<int:id>")
 def eliminar(id):
     p = producto.query.filter_by(id=id).first()
     db.session.delete(p)
     db.session.commit()
-    return render_template("lista.html", productos = producto.query.all())
+    return  principal()
 
 if __name__ == "__main__":
     db.create_all()
