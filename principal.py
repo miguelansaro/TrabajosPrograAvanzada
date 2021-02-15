@@ -27,8 +27,17 @@ class producto(db.Model):
 @cross_origin()
 def principal():
     data = producto.query.all()
-    dic_productos = simplejson.dumps(data)
-    return jsonify(dic_productos)
+    lista = []
+    for i in data:
+        datos = {
+            "id": i.id,
+            "nombre": i.producto_nombre,
+            "cantidad": i.producto_cantidad,
+            "valor": i.producto_valor
+        }
+    lista.append(datos)
+    dict_json = json.dumps(lista)
+    return dict_json
 
 @app.route("/agregar/<nombre>/<int:valor>/<int:cantidad>")
 def agregar(nombre, valor, cantidad):
