@@ -1,10 +1,14 @@
-from flask import Flask, request, url_for, redirect, render_template, session
+from flask import Flask, request, url_for, redirect, render_template, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS, cross_origin
+import simplejson
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///productos.db'
 app.config['SECRET_KEY'] = "123"
-
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 db = SQLAlchemy(app)
 
 class producto(db.Model):
@@ -20,8 +24,11 @@ class producto(db.Model):
 
 
 @app.route("/")
+@cross_origin()
 def principal():
-    return render_template("lista.html", productos = producto.query.all())
+    data = producto.query.all()
+    dic_productos = simplejson.dumps(data)
+    return jsonify(dic_productos)
 
 @app.route("/agregar/<nombre>/<int:valor>/<int:cantidad>")
 def agregar(nombre, valor, cantidad):

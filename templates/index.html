@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+   
+    <title>Cliente Productos</title>
+  </head>
+
+  <body>
+    <h1>Productos</h1>
+    <div id="datos">
+    </div>
+
+  </body>
+  <script>
+    const elemento = document.getElementById("datos");
+    cadena = "";
+    const url = 'http://localhost:5000';
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        cadena = "<table>";
+        cadena += "<tr>";
+        cadena += "<th> Nombre"; 
+        cadena += "<th> Nombre </th><th> Cantidad </th><th> Valor </th>";
+        cadena += "</tr>";
+        for (x in data){
+          cadena += "<tr>";
+          cadena += "<td> " + data[x].nombre + "</td><td>" + data[x].cantidad + "</td><td>" +  + data[x].valor + "</td>";
+          cadena += "</tr>";
+        }
+        cadena += "</table>";
+        elemento.innerHTML = cadena; 
+      })
+
+  </script>
+</html>
