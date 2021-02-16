@@ -38,6 +38,10 @@ def principal():
         lista[i.id] = datos
     return jsonify(lista)
 
+@app.route("/index")
+def index():
+    return render_template("index.html")
+
 @app.route("/agregar/<nombre>/<int:valor>/<int:cantidad>")
 def agregar(nombre, valor, cantidad):
     datos = {"nombre": nombre, 
