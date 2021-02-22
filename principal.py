@@ -42,8 +42,12 @@ def principal():
 def index():
     return render_template("index.html")
 
+@app.route("/agregar")
+def agregar():
+    return render_template("agregar.html")
+
 @app.route("/agregar/<nombre>/<int:valor>/<int:cantidad>")
-def agregar(nombre, valor, cantidad):
+def agregarp(nombre, valor, cantidad):
     datos = {"nombre": nombre, 
              "cantidad": cantidad,
              "valor": valor

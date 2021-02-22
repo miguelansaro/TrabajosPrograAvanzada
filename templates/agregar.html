@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Agregar Producto</title>
+    </head>
+    <script>
+        function agregar_producto(){
+            id_nombre = document.getElementById("nombre").value;
+            id_valor = document.getElementById("valor").value;
+            id_cantidad = document.getElementById("cantidad").value;
+            alert("Elemento agregado");
+            fetch("http://localhost:5000"+"/agregar/"+id_nombre+"/"+parseInt(id_valor,10)+"/"+parseInt(id_cantidad,10))
+        }
+    </script>
+    <body>
+        <h1>Agregar Producto</h1>
+        <div>
+            <label for="nombre">Nombre del producto</label>
+            <input id="nombre">
+            <label for="valor">Valor del producto</label>
+            <input id="valor">
+            <label for="cantidad">Cantidad del producto</label>
+            <input id="cantidad">
+            <button onclick="agregar_producto()" ><a href ="{{ url_for('index') }}">Agregar</a></button>
+            <button ><a href ="{{ url_for('index') }}">Salir</a></button>
+        </div>
+    </body>
+</html>
